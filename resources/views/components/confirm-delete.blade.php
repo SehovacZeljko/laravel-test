@@ -1,5 +1,5 @@
 {{-- Reusable Delete Confirmation Modal --}}
-<div id="confirmModal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 hidden">
+<div id="confirmModal" class="fixed inset-0 items-center justify-center bg-black bg-opacity-50 hidden">
     <div class="bg-white p-6 rounded-lg shadow-lg w-96">
         <h2 class="text-lg font-bold mb-4">Are you sure?</h2>
         <p id="confirmMessage" class="mb-6">Do you really want to delete this item? This action cannot be undone.</p>
@@ -36,9 +36,11 @@
 
         // show modal
         document.getElementById('confirmModal').classList.remove('hidden');
+        document.getElementById('confirmModal').classList.add('flex');
     }
 
     function closeModal() {
+        document.getElementById('confirmModal').classList.remove('flex');
         document.getElementById('confirmModal').classList.add('hidden');
     }
 </script>
