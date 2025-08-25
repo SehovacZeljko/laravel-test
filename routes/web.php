@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\NinjaController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ProfileController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -25,4 +26,9 @@ Route::middleware('auth')->controller(NinjaController::class)->group(function ()
     Route::get('/ninjas/{ninja}', 'show')->name('ninjas.show');
     Route::post('/ninjas', 'store')->name('ninjas.store');
     Route::delete('/ninjas/{ninja}', 'destroy')->name('ninjas.destroy');
+});
+
+//Profile
+Route::middleware('auth')->controller(ProfileController::class)->group(function () {
+    Route::get('/profile', 'showProfile')->name('show.profile');
 });
