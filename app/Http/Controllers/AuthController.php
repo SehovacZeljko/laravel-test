@@ -11,54 +11,59 @@ class AuthController extends Controller
 {
   public function showRegister()
   {
-      return view('auth.register');
+    return view('auth.register');
   }
 
   public function showLogin()
   {
-      return view('auth.login');
+    return view('auth.login');
   }
 
   public function register(Request $request)
   {
-      $validated = $request->validate([
-        'name' => 'required|string|max:255',
-        'email' => 'required|email|unique:users',
-        'password' => 'required|string|min:8|confirmed',
-      ]);
+    $validated = $request->validate([
+      'name' => 'required|string|max:255',
+      'email' => 'required|email|unique:users',
+      'password' => 'required|string|min:8|confirmed',
+      'phone_number' => ['nullable', 'string', 'max:20'],
+      'bio' => ['nullable', 'string', 'max:500'],
+      'location' => ['nullable', 'string', 'max:255'],
+      'website' => ['nullable', 'url', 'max:255'],
+      'avatar' => ['nullable', 'string', 'max:255']
+    ]);
 
-      $user = User::create($validated);
+    $user = User::create($validated);
 
-      Auth::login($user);
+    Auth::login($user);
 
-      return redirect()->route('ninjas.index');
+    return redirect()->route('ninjas.index');
   }
 
   public function login(Request $request)
   {
-      $validated = $request->validate([
-        'email' => 'required|email',
-        'password' => 'required|string|min:8',
-      ]);
+    $validated = $request->validate([
+      'email' => 'required|email',
+      'password' => 'required|string|min:8',
+    ]);
 
-      if (Auth::attempt($validated)) {
-        $request->session()->regenerate();
+    if (Auth::attempt($validated)) {
+      $request->session()->regenerate();
 
-        return redirect()->route('ninjas.index');
-      }
+      return redirect()->route('ninjas.index');
+    }
 
-      throw ValidationException::withMessages([
-        'credentials' => 'Sorry, incorrect credentials',
-      ]);
+    throw ValidationException::withMessages([
+      'credentials' => 'Sorry, incorrect credentials',
+    ]);
   }
 
   public function logout(Request $request)
   {
-      Auth::logout();
+    Auth::logout();
 
-      $request->session()->invalidate();
-      $request->session()->regenerateToken();
+    $request->session()->invalidate();
+    $request->session()->regenerateToken();
 
-      return redirect()->route('show.login');
+    return redirect()->route('show.login');
   }
 }
