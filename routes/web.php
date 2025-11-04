@@ -31,4 +31,5 @@ Route::middleware('auth')->controller(NinjaController::class)->group(function ()
 //Profile
 Route::middleware('auth')->controller(ProfileController::class)->group(function () {
     Route::get('/profile', 'showProfile')->name('show.profile');
+    Route::delete('/profile', 'destroy')->name('profile.destroy');
 });

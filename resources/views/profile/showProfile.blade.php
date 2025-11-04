@@ -5,11 +5,11 @@
             <div class="flex items-start space-x-6">
                 <!-- Profile Photo -->
                 <div class="flex-shrink-0">
-                    {{-- <img class="h-24 w-24 rounded-full object-cover"
+                    <img class="h-24 w-24 rounded-full object-cover"
                         src="{{ $user->avatar ? Storage::url($user->avatar) : asset('images/default-avatar.png') }}"
-                        alt="{{ $user->name }}"> --}}
-                    <img class="h-24 w-24 rounded-full object-cover" src="{{ asset('images/default-avatar.png') }}"
                         alt="{{ $user->name }}">
+                    {{-- <img class="h-24 w-24 rounded-full object-cover" src="{{ asset('images/default-avatar.png') }}"
+                        alt="{{ $user->name }}"> --}}
                 </div>
 
                 <!-- User Information -->
@@ -71,6 +71,11 @@
                     </div>
                 </div>
                 <button class="btn">Edit</button>
+                <button onclick="openModal(this)" data-action="{{ route('profile.destroy') }}"
+                    data-name="{{ auth()->user()->name }}"
+                    class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded">
+                    Delete My Account
+                </button>
             </div>
         </div>
     </div>

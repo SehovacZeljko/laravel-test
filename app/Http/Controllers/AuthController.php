@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\ValidationException;
 
 class AuthController extends Controller
@@ -29,8 +30,13 @@ class AuthController extends Controller
       'bio' => ['nullable', 'string', 'max:500'],
       'location' => ['nullable', 'string', 'max:255'],
       'website' => ['nullable', 'url', 'max:255'],
-      'avatar' => ['nullable', 'string', 'max:255']
+      'avatar' => ['nullable', 'image', 'mimes:jpg,jpeg,png,gif', 'max:2048'],
     ]);
+
+    // ✅ Handle avatar upload
+    if ($request->hasFile('avatar')) {
+      $validated['avatar'] = $request->file('avatar')->store('avatars', 'public');
+    }
 
     $user = User::create($validated);
 
