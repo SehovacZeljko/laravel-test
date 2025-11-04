@@ -1,6 +1,17 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Http\Request;
+
+// Quick test route
+Route::get('/ping', function (Request $request) {
+    return response()->json([
+        'message' => 'API is working!',
+        'time' => now()->toISOString(),
+        'user' => \Illuminate\Support\Facades\Auth::check() ? 'Logged in' : 'Not logged in'
+    ]);
+});
+
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\NinjaController;
 use App\Http\Controllers\Api\ProfileController;
