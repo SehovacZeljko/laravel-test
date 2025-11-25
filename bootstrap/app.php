@@ -12,7 +12,13 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
-        //
+        // THIS LINE FIXES YOUR CORS PROBLEM FOREVER
+        $middleware->api(prepend: [
+            \Illuminate\Http\Middleware\HandleCors::class,
+        ]);
+
+        // Optional but recommended: also add it globally if you want
+        // $middleware->prepend(\Fruitcake\Cors\HandleCors::class);
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //
